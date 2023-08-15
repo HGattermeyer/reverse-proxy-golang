@@ -11,7 +11,8 @@ import (
 	"proxy-golang/internal/models"
 )
 
-func AddServer(w http.ResponseWriter, r *http.Request) {
+func UploadFile(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Upload a file")
 	file, _, err := r.FormFile("file")
 	if err != nil {
 		panic(err)
@@ -24,7 +25,7 @@ func AddServer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var payload []models.Server
+	var payload []models.ServerFile
 	err = json.Unmarshal(buf.Bytes(), &payload)
 	if err != nil {
 		log.Fatal("Error during Unmarshal(): ", err)
