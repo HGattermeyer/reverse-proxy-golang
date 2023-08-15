@@ -1,0 +1,19 @@
+[
+    {
+        "uri": "Satellite/MP01",
+        "redirectServers": [
+            "https://server1.com",
+            "https://server2.com",
+            "https://server3.com",
+            "https://server4.com"
+        ]
+    },
+    {
+        "uri": "Satellite/MP02",
+        "redirectServers": [
+            "https://server1.com",
+            "https://server2.com",
+            "https://server3.com"
+        ]
+    }
+]
