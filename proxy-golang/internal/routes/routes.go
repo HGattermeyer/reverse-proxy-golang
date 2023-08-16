@@ -2,7 +2,7 @@ package routes
 
 import (
 	"net/http"
-	"proxy-golang/internal/data"
+	"proxy-golang/internal/config"
 	"proxy-golang/internal/handlers"
 
 	"github.com/gorilla/mux"
@@ -12,7 +12,7 @@ import (
 func SetupRouter(db *gorm.DB) *mux.Router {
 	router := mux.NewRouter()
 
-	subrouter := router.PathPrefix(data.PathPrefix).Subrouter()
+	subrouter := router.PathPrefix(config.PathPrefix).Subrouter()
 
 	// UPLOAD FILE
 	subrouter.HandleFunc("/servers/upload-file", func(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +25,7 @@ func SetupRouter(db *gorm.DB) *mux.Router {
 
 	// SERVER CREATE
 	subrouter.HandleFunc("/servers", func(w http.ResponseWriter, r *http.Request) {
-		err := handlers.CreateServer(w, r, db)
+		err := handlers.CreateServerHandler(w, r, db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
@@ -34,7 +34,7 @@ func SetupRouter(db *gorm.DB) *mux.Router {
 
 	// SERVER DELETE
 	subrouter.HandleFunc("/servers/{param:.+}", func(w http.ResponseWriter, r *http.Request) {
-		err := handlers.DeleteServer(w, r, db)
+		err := handlers.DeleteServerHandler(w, r, db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
@@ -43,7 +43,7 @@ func SetupRouter(db *gorm.DB) *mux.Router {
 
 	// SERVER GET BY URI
 	subrouter.HandleFunc("/servers/{param:.+}", func(w http.ResponseWriter, r *http.Request) {
-		err := handlers.GetServerByUri(w, r, db)
+		err := handlers.GetServerByUriHandler(w, r, db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
@@ -52,16 +52,25 @@ func SetupRouter(db *gorm.DB) *mux.Router {
 
 	// SERVER GET ALL
 	subrouter.HandleFunc("/servers/", func(w http.ResponseWriter, r *http.Request) {
-		err := handlers.GetAllServers(w, r, db)
+		err := handlers.GetAllServersHandler(w, r, db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	}).Methods("GET")
-	// GET
+
+	// SERVER UPDATE STRATEGY
+	subrouter.HandleFunc("/servers/{param:.+}/strategy", func(w http.ResponseWriter, r *http.Request) {
+		err := handlers.UpdateStrategyHandler(w, r, db)
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+	}).Methods("PUT")
+
 	// PROXY
 	subrouter.HandleFunc("/{param:.+}", func(w http.ResponseWriter, r *http.Request) {
-		err := handlers.GetProxy(w, r, db)
+		err := handlers.GetProxyHandler(w, r, db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return

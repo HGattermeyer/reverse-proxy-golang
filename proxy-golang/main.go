@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"proxy-golang/internal/data"
+	"proxy-golang/internal/repository"
 	"proxy-golang/internal/routes"
 )
 
 func main() {
 	// Initialize DB
 	fmt.Println("Initializing DB")
-	db, err := data.InitializeDb()
+	db, err := repository.InitializeDb()
 	if err != nil {
 		log.Fatal("Error initializing DB: ", err)
 	}

@@ -1,4 +1,4 @@
-package data
+package repository
 
 import (
 	"proxy-golang/internal/models"
@@ -24,6 +24,11 @@ func GetAllServers(db *gorm.DB) ([]models.Server, error) {
 func SaveOrUpdateServer(server models.Server, db *gorm.DB) models.Server {
 
 	db.Save(&server)
+
+	// Save the RedirectServer association
+	for i := range server.RedirectServer {
+		db.Save(&server.RedirectServer[i])
+	}
 
 	return server
 }

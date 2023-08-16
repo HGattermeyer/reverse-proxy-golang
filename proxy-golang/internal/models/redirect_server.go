@@ -1,7 +1,8 @@
 package models
 
 type RedirectServer struct {
-	ID       uint
-	ServerID uint
-	Server   string
+	ID          uint
+	ServerID    uint
+	Server      string
+	AccessCount int
 }

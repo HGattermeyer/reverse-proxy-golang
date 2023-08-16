@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"net/http"
-	"proxy-golang/internal/data"
 	"proxy-golang/internal/models"
+	data "proxy-golang/internal/repository/server"
 
 	"gorm.io/gorm"
 )
