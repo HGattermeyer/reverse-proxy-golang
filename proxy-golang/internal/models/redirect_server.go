@@ -1,9 +1,7 @@
 package models
 
-import "gorm.io/gorm"
-
 type RedirectServer struct {
-	gorm.Model
+	ID       uint
 	ServerID uint
 	Server   string
 }

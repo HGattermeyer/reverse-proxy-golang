@@ -1,7 +1,5 @@
 package models
 
-import "gorm.io/gorm"
-
 type ServerFile struct {
 	Uri             string
 	RedirectCount   int
@@ -9,7 +7,7 @@ type ServerFile struct {
 }
 
 type Server struct {
-	gorm.Model
+	ID             uint
 	Uri            string
 	RedirectCount  int
 	RedirectServer []RedirectServer
