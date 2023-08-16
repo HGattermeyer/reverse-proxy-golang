@@ -1,6 +1,4 @@
-endpoint
-redirect_uri_1
-redirect_uri_2
-redirect_uri_3
-redirect_uri_4
-redirect_uri_n
+Satellite/MP06
+https://google.com
+https://facebook.com
+https://x.com

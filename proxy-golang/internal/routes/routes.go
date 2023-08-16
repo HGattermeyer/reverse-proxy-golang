@@ -13,7 +13,15 @@ func SetupRouter(db *gorm.DB) *mux.Router {
 	router := mux.NewRouter()
 
 	subrouter := router.PathPrefix(data.PathPrefix).Subrouter()
-	subrouter.HandleFunc("/servers/upload-file", handlers.UploadFile).Methods("POST")
+
+	// UPLOAD FILE
+	subrouter.HandleFunc("/servers/upload-file", func(w http.ResponseWriter, r *http.Request) {
+		err := handlers.UploadTxtFile(w, r, db)
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+	}).Methods("POST")
 
 	// SERVER CREATE
 	subrouter.HandleFunc("/servers", func(w http.ResponseWriter, r *http.Request) {

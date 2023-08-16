@@ -1,11 +1,5 @@
 package models
 
-type ServerFile struct {
-	Uri             string
-	RedirectCount   int
-	RedirectServers []string
-}
-
 type Server struct {
 	ID             uint
 	Uri            string

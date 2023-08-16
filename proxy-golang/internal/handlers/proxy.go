@@ -19,6 +19,8 @@ func GetProxy(w http.ResponseWriter, r *http.Request, db *gorm.DB) error {
 	// Retrieve the server object
 	server, err := data.GetServerByUri(uri, db)
 
+	println("Getting the server:", server.ID, server.Uri, server.RedirectCount)
+
 	// Return error if the server is not registered
 	if server.ID == 0 {
 		http.Error(w, "Server not registered.", http.StatusNotFound)
@@ -54,45 +56,7 @@ func GetProxy(w http.ResponseWriter, r *http.Request, db *gorm.DB) error {
 	return nil
 }
 
-// func ProxyHandler(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)
-// 	targetUri := params["param"]
-
-// 	// Check if the uri exists on mapping
-// 	redirectServer, exist := findRedirectServer(targetUri)
-// 	if !exist {
-// 		http.NotFound(w, r)
-// 		return
-// 	}
-
-// 	// Construct the target URL for redirection
-// 	targetURL := redirectServer + data.PathPrefix + "/" + targetUri
-
-// 	fmt.Println("targetUrl:", targetURL)
-
-// 	// Perform the redirection with a 302 status code
-// 	http.Redirect(w, r, targetURL, http.StatusFound)
-// }
-
-// // Look into the server object to find the next server to redirect
-// func findRedirectServer(uri string) (string, bool) {
-// 	// Thread safe to avoid concurrency issues
-// 	serverSliceMutex.Lock()
-// 	defer serverSliceMutex.Unlock()
-
-// 	for i := range data.ServerSlice {
-// 		srv := &data.ServerSlice[i]
-// 		if srv.Uri == uri && len(srv.RedirectServers) > 0 {
-// 			srvCount := len(srv.RedirectServers)
-// 			if srv.RedirectCount == srvCount {
-// 				srv.RedirectCount = 0
-// 			}
-
-// 			redirectServer := srv.RedirectServers[srv.RedirectCount]
-
-// 			srv.RedirectCount++
-// 			return redirectServer, true
-// 		}
-// 	}
-// 	return "", false
-// }
+// Rules:
+// Default (sequentially/round robin)
+// Random
+// Least accessed
