@@ -68,6 +68,15 @@ func SetupRouter(db *gorm.DB) *mux.Router {
 		}
 	}).Methods("PUT")
 
+	// SERVER ADD REDIRECT SERVER
+	subrouter.HandleFunc("/servers/{param:.+}/redirect-server", func(w http.ResponseWriter, r *http.Request) {
+		err := handlers.CreateRedirectServerHandler(w, r, db)
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+	}).Methods("PUT")
+
 	// PROXY
 	subrouter.HandleFunc("/{param:.+}", func(w http.ResponseWriter, r *http.Request) {
 		err := handlers.GetProxyHandler(w, r, db)

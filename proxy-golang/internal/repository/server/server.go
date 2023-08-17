@@ -33,6 +33,12 @@ func SaveOrUpdateServer(server models.Server, db *gorm.DB) models.Server {
 	return server
 }
 
+func SaveOrUpdateRedirectServer(rs models.RedirectServer, db *gorm.DB) models.RedirectServer {
+	db.Save(&rs)
+
+	return rs
+}
+
 func DeleteServerByUri(uri string, db *gorm.DB) error {
 	server, err := GetServerByUri(uri, db)
 

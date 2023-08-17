@@ -155,3 +155,43 @@ func UpdateStrategyHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) 
 
 	return nil
 }
+
+func CreateRedirectServerHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) error {
+	// Get the server ID from the URL parameters
+	params := mux.Vars(r)
+	uri := params["param"]
+
+	// Parse the request body to get the new redirect server
+	var newRedirectServer models.RedirectServer
+	err := json.NewDecoder(r.Body).Decode(&newRedirectServer)
+
+	if err != nil {
+		http.Error(w, "Error parsing JSON", http.StatusBadRequest)
+		return err
+	}
+
+	// Retrieve the server from the database using the uri
+	server, err := data.GetServerByUri(uri, db)
+	if err != nil {
+		http.Error(w, "Server not found", http.StatusNotFound)
+		return err
+	}
+
+	// Update the server Id
+	newRedirectServer.ServerID = server.ID
+
+	// Save the updated server in the database
+	data.SaveOrUpdateRedirectServer(newRedirectServer, db)
+
+	// Respond with a success message and the server obect
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	err = json.NewEncoder(w).Encode(newRedirectServer)
+	if err != nil {
+		http.Error(w, "Error encoding JSON response", http.StatusInternalServerError)
+		return err
+	}
+
+	return nil
+}
