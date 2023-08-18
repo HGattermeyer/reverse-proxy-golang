@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "db03ab33-0ca1-44e6-8375-642417a6b906",
+		"name": "Proxy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18651573"
+	},
+	"item": [
+		{
+			"name": "Access the Server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/Satellite/MP02",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"Satellite",
+						"MP02"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Strategy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"strategy\": \"LeastAccessed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers/Satellite/MP02/strategy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers",
+						"Satellite",
+						"MP02",
+						"strategy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload File",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Codes/Go/webapi/proxy-golang/internal/data/upload-file-model_test.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers/upload-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers",
+						"upload-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Server",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uri\": \"Satellite/MP02\",\r\n    \"strategy\": \"RoundRobin\",\r\n    \"redirectServer\": [\r\n        {\r\n            \"server\": \"http://example.com/1\"\r\n        },\r\n        {\r\n            \"server\": \"http://example.com/2\"\r\n        },\r\n        {\r\n            \"server\": \"http://example.com/3\"\r\n        },\r\n        {\r\n            \"server\": \"http://example.com/4\"\r\n        }\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Server",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers/Satellite/MP01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers",
+						"Satellite",
+						"MP01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get By Uri",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers/Satellite/MP02",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers",
+						"Satellite",
+						"MP02"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Redirect Server",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Server\": \"http://uol.com\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers/Satellite/MP02/redirect-server",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers",
+						"Satellite",
+						"MP02",
+						"redirect-server"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/servers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"servers",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
