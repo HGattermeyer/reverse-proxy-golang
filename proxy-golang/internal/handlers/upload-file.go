@@ -34,7 +34,6 @@ func UploadTxtFile(w http.ResponseWriter, r *http.Request, db *gorm.DB) error {
 
 	// Check if the uri already exists in db
 	serverExists, err := data.GetServerByUri(uri, db)
-
 	if serverExists.ID != 0 {
 		http.Error(w, "This URI already exists", http.StatusBadRequest)
 		return err
@@ -66,6 +65,7 @@ func UploadTxtFile(w http.ResponseWriter, r *http.Request, db *gorm.DB) error {
 		Uri:            uri,
 		RedirectCount:  0,
 		RedirectServer: redirectServers,
+		Strategy:       "RoundRobin",
 	}
 
 	data.SaveOrUpdateServer(server, db)

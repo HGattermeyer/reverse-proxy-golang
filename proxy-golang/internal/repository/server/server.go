@@ -10,6 +10,7 @@ func GetServerByUri(uri string, db *gorm.DB) (models.Server, error) {
 	var server models.Server
 
 	err := db.Model(&models.Server{}).Preload("RedirectServer").Where("uri = ?", uri).Find(&server).Error
+
 	return server, err
 }
 

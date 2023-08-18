@@ -77,8 +77,8 @@ func GetServerByUriHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) 
 
 	// Retrieve the server object
 	server, err := data.GetServerByUri(uri, db)
-	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	if server.ID == 0 {
+		http.Error(w, "This URI does not exist", http.StatusBadRequest)
 		return err
 	}
 
@@ -132,8 +132,8 @@ func UpdateStrategyHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) 
 
 	// Retrieve the server from the database using the serverID
 	server, err := data.GetServerByUri(uri, db) // Replace data.GetServerByID with your actual function
-	if err != nil {
-		http.Error(w, "Server not found", http.StatusNotFound)
+	if server.ID == 0 {
+		http.Error(w, "This URI does not exist", http.StatusBadRequest)
 		return err
 	}
 
@@ -172,8 +172,8 @@ func CreateRedirectServerHandler(w http.ResponseWriter, r *http.Request, db *gor
 
 	// Retrieve the server from the database using the uri
 	server, err := data.GetServerByUri(uri, db)
-	if err != nil {
-		http.Error(w, "Server not found", http.StatusNotFound)
+	if server.ID == 0 {
+		http.Error(w, "This URI does not exist", http.StatusBadRequest)
 		return err
 	}
 
